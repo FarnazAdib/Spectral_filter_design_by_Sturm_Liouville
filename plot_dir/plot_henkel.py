@@ -1,4 +1,5 @@
 import jax.numpy as jnp
+import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -20,6 +21,24 @@ def plot_henkel_eigenvectors(phi, ind):
         plt.show()
     return plt
 
+def plot_ODE(sol, T, lmbd):
+    _colors, _label_fontsize, _legend_fontsize = set_properties()
+    # plt.style.use('seaborn')
+    sns.set_theme()
+    plt.figure()
+    ax = plt.gca()
+    t_start = 1.0 / T
+    x_plot = np.linspace(t_start, 1-t_start, T-1)
+    y_plot = sol.sol(x_plot)[0]
+    plt.plot(jnp.arange(T-1), y_plot, label='$\phi_{ODE}$('+str(round(-lmbd))+')', color=_colors[0])
+    ax.set(xlim=(0, T))
+    # plt.axis([0, T - 1, -1, 1])
+    ax.set_xlabel("Time", fontsize=_label_fontsize)
+
+    plt.legend(fontsize=_legend_fontsize)
+    plt.show()
+
+    return plt
 
 
 

@@ -1,6 +1,6 @@
 import numpy as np
 from scipy.integrate import solve_bvp
-import matplotlib.pyplot as plt
+from plot_dir.plot_henkel import plot_ODE
 
 def p(x):
     return x**2-x**4
@@ -21,18 +21,14 @@ def bc(ya, yb, lmbd):
     k = lmbd[0]
     return np.array([ya[0], yb[0] , ya[1]-k])
 
+T = 1000
+t_start = 1 / T
 
-x = np.linspace(0.01, 0.99, 99)
+x = np.linspace(t_start, 1-t_start, T-1)
 y = np.zeros((2, x.size))
 y[0, 0] = 1
 # y[0, 3] = -1
-sol = solve_bvp(fun, bc, x, y, p=[0.003])
+sol = solve_bvp(fun, bc, x, y, p=[-97])
 print(sol.p[0])
 
-
-x_plot = np.linspace(0.01, 0.99, 99)
-y_plot = sol.sol(x_plot)[0]
-plt.plot(x_plot, y_plot)
-plt.xlabel("x")
-plt.ylabel("y")
-plt.show()
+my_plot = plot_ODE(sol, T, sol.p[0])
