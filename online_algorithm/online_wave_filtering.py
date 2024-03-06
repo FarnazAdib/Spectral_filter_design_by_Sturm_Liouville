@@ -6,7 +6,7 @@ from jax import grad
 from jax import jit
 
 
-from spectral_filtering.henkel_matrix import Henkel_matrix
+from spectral_filtering.hankel_matrix import Hankel_matrix
 
 class Online_wawe_filtering:
     def __init__(self, T:int, m:int, p:int, k=10, eta=0.01, R_M = 1.0):
@@ -18,7 +18,7 @@ class Online_wawe_filtering:
         :param R_M: radius parameter
         '''
         self.T = T
-        my_henkel = Henkel_matrix(T)
+        my_henkel = Hankel_matrix(T)
         self.sigma = my_henkel.sigma[:k]
         self.phi = my_henkel.phi[:, :k]
         self.k = k
