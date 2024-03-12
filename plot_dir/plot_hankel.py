@@ -9,9 +9,8 @@ import matplotlib.colors as mcolors
 
 def plot_hankel_eigenvectors(phi, ind, normalized=True):
     _colors, _label_fontsize, _legend_fontsize = set_properties()
-    # plt.style.use('seaborn')
     sns.set_theme()
-    plt.figure(1)
+    plt.figure()
     ax = plt.gca()
     T = phi.shape[0]
     if normalized:
@@ -19,41 +18,51 @@ def plot_hankel_eigenvectors(phi, ind, normalized=True):
     for i in range(len(ind)):
         plt.plot(jnp.arange(T), phi[:, ind[i]], label=f'$\phi_{{{ind[i]+1}}}$', color=_colors[i])
         plt.axis([0, T - 1, -1, 1])
-        # ax.set_xlabel("$N$", fontsize=_label_fontsize)
-        # ax.set_ylabel('$r_{:1}$'.format(i + 1)+'$_k$', fontsize=_label_fontsize)
         plt.legend(fontsize=_legend_fontsize)
         # plt.title(title)
-    # plt.show()
     return plt
 
 
-def plot_ODE(sol, T, lmbd, normalized=True):
+def plot_ODE(y_ode, lmbd_set, normalized=True):
     _colors, _label_fontsize, _legend_fontsize = set_properties()
-    # plt.style.use('seaborn')
     sns.set_theme()
-    plt.figure(2)
+    plt.figure()
     ax = plt.gca()
-    t_start = 1.0 / T
-    x_plot = np.linspace(t_start, 1-t_start, T)
-    y_plot = sol.sol(x_plot)[0]
+    T = y_ode.shape[0]
     if normalized:
-        y_plot = normalize(y_plot.reshape(-1, 1), axis=0, norm="l2")
-    plt.plot(jnp.arange(T), y_plot, label='$\phi_{ODE}$('+str(round(-lmbd,2))+')', color=_colors[0])
-    ax.set(xlim=(0, T))
-    # plt.axis([0, T - 1, -1, 1])
-    # ax.set_xlabel("$N$", fontsize=_label_fontsize)
+        y_ode = normalize(y_ode, axis=0, norm="l2")
+    for i in range(len(lmbd_set)):
+        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta$('+str(round(-lmbd_set[i], 2))+')', color=_colors[i])
+        ax.set(xlim=(0, T))
+        # plt.axis([0, T - 1, -1, 1])
+        plt.legend(fontsize=_legend_fontsize)
 
-    plt.legend(fontsize=_legend_fontsize)
-    # plt.show()
     return plt
 
 
-def plot_ODE_Hankel(sol, T, lmbd, phi_i, ind_i, normalized=True):
+def plot_Hankel_ODE(phi, ind, y_ode, lmbd_set, normalized=True):
+    _colors, _label_fontsize, _legend_fontsize = set_properties()
+    sns.set_theme()
+    plt.figure()
+    ax = plt.gca()
+    T = phi.shape[0]
+    if normalized:
+        phi = normalize(phi, axis=0, norm="l2")
+        y_ode = normalize(y_ode, axis=0, norm="l2")
+    for i in range(len(ind)):
+        plt.plot(jnp.arange(T), phi[:, ind[i]], label=f'$\phi_{{{ind[i] + 1}}}$', color=_colors[2*i])
+        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta$('+str(round(-lmbd_set[i], 2))+')', color=_colors[2*i+1])
+        ax.set(xlim=(0, T))
+        plt.legend(fontsize=_legend_fontsize)
+    return plt
+
+
+def plot_ODE_Hankel2(sol, T, lmbd, phi_i, ind_i, normalized=True):
     _colors, _label_fontsize, _legend_fontsize = set_properties()
     # plt.style.use('seaborn')
     sns.set_theme()
     fig = plt.figure()
-    plt.figure(3)
+    plt.figure()
     ax = plt.gca()
     t_start = 1.0 / T
     x_plot = np.linspace(t_start, 1-t_start, T)
