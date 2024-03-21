@@ -32,7 +32,7 @@ def plot_ODE(y_ode, lmbd_set, normalized=True):
     if normalized:
         y_ode = normalize(y_ode, axis=0, norm="l2")
     for i in range(len(lmbd_set)):
-        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta$('+str(round(-lmbd_set[i], 2))+')', color=_colors[i])
+        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta(\lambda=$'+str(round(-lmbd_set[i], 2))+')', color=_colors[i])
         ax.set(xlim=(0, T))
         # plt.axis([0, T - 1, -1, 1])
         plt.legend(fontsize=_legend_fontsize)
@@ -51,7 +51,7 @@ def plot_Hankel_ODE(phi, ind, y_ode, lmbd_set, normalized=True):
         y_ode = normalize(y_ode, axis=0, norm="l2")
     for i in range(len(ind)):
         plt.plot(jnp.arange(T), phi[:, ind[i]], label=f'$\phi_{{{ind[i] + 1}}}$', color=_colors[2*i])
-        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta$('+str(round(-lmbd_set[i], 2))+')', color=_colors[2*i+1])
+        plt.plot(jnp.arange(T), y_ode[:, i], label='$\zeta(\lambda=$'+str(round(-lmbd_set[i], 2))+')', color=_colors[2*i+1])
         ax.set(xlim=(0, T))
         plt.legend(fontsize=_legend_fontsize)
     return plt

@@ -20,36 +20,37 @@ with open('Hankel_1000', 'rb') as pr:
     my_hankel = pickle.load(pr)[0]
 
 # Plot Hankel eigen vectors
+# ind = jnp.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 # ind = jnp.array([10, 11, 12, 13, 14, 15, 16, 17, 18, 19])
-# my_plot_Hankel = plot_hankel_eigenvectors(my_hankel.phi, ind, normalized=False)
-# plt.show()
+# ind = jnp.array([20, 21, 22, 23, 24])
+# my_plot_Hankel = plot_hankel_eigenvectors(my_hankel.phi, ind), normalized=False)
+my_plot_Hankel = plot_hankel_eigenvectors(my_hankel.phi, jnp.array([2]), normalized=False)
+my_plot_Hankel1 = plot_hankel_eigenvectors(my_hankel.phi, jnp.array([5]), normalized=False)
+my_plot_Hankel2 = plot_hankel_eigenvectors(my_hankel.phi, jnp.array([8]), normalized=False)
+plt.show()
 # orth_hankel(my_hankel, 50)
 
 
 # associating solutions to ode and Hankel
-lam_set = np.array([-87])
-y_ode = y_sl(lam_set, T)
-my_plot_ODE = plot_ODE(y_ode, lam_set)
-ind = jnp.array([24])
-my_plot_Hankel_ODE = plot_Hankel_ODE(my_hankel.phi, ind, y_ode, lam_set)
-plt.show()
-
-# my_ode_solver = Ode_strum_liouville(T)
-# my_ode_solution = my_ode_solver.solve_ode_sl(-87)
-# print(my_ode_solution.p[0])
-# my_plot_ODE = plot_ODE(my_ode_solution, T, my_ode_solution.p[0], normalized=False)
-# i = 24
-# my_plot_Hankel = plot_ODE_Hankel2(my_ode_solution, T, my_ode_solution.p[0], my_hankel.phi[:,i], i, normalized=True)
+# lam_set = np.array([-65])
+# y_ode = y_sl(lam_set, T)
+# my_plot_ODE = plot_ODE(y_ode, lam_set)
+# ind = jnp.array([21])
+# my_plot_Hankel_ODE = plot_Hankel_ODE(my_hankel.phi, ind, y_ode, lam_set)
 # plt.show()
+
 
 # Plotting ODE solutions and checking orthogonality
-# lam_set = np.array([-15, -25, -35, -40, -44, -50, -60, -65, -75, -80, -87])
+# lam_set = np.array([-60, -65, -75, -80, -87])
 # y_ode = y_sl(lam_set, T)
-# my_plot_ODE = plot_ODE(y_ode, np.array([-15]))
-# my_plot_ODE = plot_ODE(y_ode, np.array([-15, -25, -35, -40, -44, -50]))
+# # my_plot_ODE = plot_ODE(y_ode, np.array([-15]))
+# # my_plot_ODE = plot_ODE(y_ode, np.array([-15, -25, -35, -40, -44, -50]))
 # my_plot_ODE = plot_ODE(y_ode, np.array([-60, -65, -75, -80, -87]))
 # plt.show()
+# print("orthogonality among ode solutions:")
 # orth_sl(y_ode)
+# print("orthogonality among eignevectors and ode solutions:")
+# orth_sl(np.concatenate((my_hankel.phi[:, 0:14], y_ode), axis=1))
 
 
 
